@@ -3,6 +3,8 @@ using System;
 
 public class Player : Area2D
 {
+    [Signal]
+    public delegate void Hit();
     [Export]
     public int speed = 400;
 
@@ -64,5 +66,20 @@ public class Player : Area2D
             animatedSprite.FlipV = velocity.y > 0;
 
         }
+    }
+
+    public void Start(Vector2 pos)
+    {
+        Position = pos;
+        Show();
+        GetNode<CollisionShape2D>("CollisionShape2D").Disabled = false;
+    }
+
+    public void OnPlayerBodyEntered(PhysicsBody2D body)
+    {
+        Hide();
+        EmitSignal("Hit");
+        // Disable player collision to not trigger the signal "Hit" more than once
+        GetNode<CollisionShape2D>("CollisionShape2D").SetDeferred("disabled", true);
     }
 }
