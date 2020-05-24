@@ -9,7 +9,7 @@ public class Mob : RigidBody2D
     [Export]
     public int MaxSpeed = 250;
 
-    private String[] _mobTypes = {"walk", "swim", "fly"};
+    private string[] _mobTypes = {"walk", "swim", "fly"};
 
     static private Random _random = new Random();
 
